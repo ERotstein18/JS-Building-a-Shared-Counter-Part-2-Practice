@@ -1,4 +1,4 @@
-async function main(){
+async function main() {
     const countContainer = document.querySelector('#count-container');
     const incrementButton = document.querySelector('#increment-button');
     const decrementButton = document.querySelector('#decrement-button');
@@ -9,14 +9,34 @@ async function main(){
     
     let countValue = result.value;
 
-    function increment(){
+    function increment() {
         countValue++;
         countContainer.textContent = countValue;
-    }
+    
 
+    fetch('http://localhost:192.168.0.5', {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            value: countValue
+        })
+    })
+}
     function decrement(){
         countValue--;
         countContainer.textContent = countValue;
+
+        fetch('http://localhost:192.168.0.5/counter', {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                value: countValue
+            })
+        })
     }
 
     incrementButton.addEventListener('click', increment);
